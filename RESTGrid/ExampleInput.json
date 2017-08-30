@@ -1,0 +1,32 @@
+{
+  "MessageBody": {
+    "Company": {
+      "Employee": [
+        {
+          "Details": [
+            {
+              "Country": "Iceland",
+              "Age": "30",
+              "Name": "Sven",
+              "Language": "Icelandic"
+            }
+          ]
+        },
+        {
+          "Details": [
+            {
+              "Country": "Denmark",
+              "Age": "30",
+              "Name": "Svein",
+              "Language": "Danish"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "CustomProperties": {
+    "Name1": "Val1",
+    "Name2": "Val2"
+  }
+}

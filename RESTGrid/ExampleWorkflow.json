@@ -1,0 +1,55 @@
+{
+
+  "Start": {
+    "Identifier": "CreateUser",
+    "Next": [
+      "CreateRole"
+    ],
+
+    "RunCondition": null,
+    "Type": "Transformer",
+    "TaskProperties": {
+      "TransformerID": "3"
+    }
+  },
+ 
+  "Tasks": [
+    {
+      "Identifier": "CreateRole",
+      "IncommingTaskID": 0,
+      "IncommingTaskProperties": null,
+      "Next": [
+        "AddApplication"
+      ],
+      "Type": "Splitter",
+      //"RunCondition": {
+      //  "Evaluated": "CreditCard",
+      //  "Evaluator": "#valueof($.CustomProperties.PublisherIdentity)",
+      //  "Operator": "stringequals"
+      //},    
+      "TaskProperties": {
+        "ArrayPath": "$.Organization.Employee"
+      },
+     
+    },
+    {
+      "Identifier": "AddApplication",
+      "IncommingTaskID": 0,
+      "IncommingTaskProperties": null,
+      "Type": "Async",
+     
+      "RunCondition": null,
+      "TaskID": 2,
+      "TaskProperties": {
+        "Url": "http://localhost:5001/",
+        "Method": "POST",
+        "Headers": null,
+        "Body": "#valueof($.MessageBodyJson.Organization.Employee.Details)",
+        "QueryString": "api/table/user"
+
+      },
+      "TaskRetries": 0
+    },
+   
+  ]
+}

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="SapientGuardian.MySql.Data" Version="6.9.816" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RESTGrid\RESTGrid.csproj" />
+  </ItemGroup>
+
+</Project>

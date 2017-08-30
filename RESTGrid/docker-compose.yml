@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  restgrid.mysqlengine.api:
+    image: restgrid.mysqlengine.api
+    build:
+      context: ./RESTGrid.MySqlEngine.API
+      dockerfile: Dockerfile
+
+  restgrid.mysqlengine.workflow:
+    image: restgrid.mysqlengine.workflow
+    build:
+      context: ./RESTGrid.MySqlEngine.Workflow
+      dockerfile: Dockerfile

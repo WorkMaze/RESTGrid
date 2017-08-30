@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTGrid", "RESTGrid\RESTGrid.csproj", "{43964A3C-1396-4579-8770-7EB545352CB2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTGrid.MySqlEngine.API", "RESTGrid.MySqlEngine.API\RESTGrid.MySqlEngine.API.csproj", "{0A3C12BF-8A98-40BA-805D-BA3EFCCD17F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTGrid.MySqlEngine.Workflow", "RESTGrid.MySqlEngine.Workflow\RESTGrid.MySqlEngine.Workflow.csproj", "{16CD5AC3-804D-4024-952E-F54F6C43CB0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTGrid.Providers.MySql", "RESTGrid.Providers.MySql\RESTGrid.Providers.MySql.csproj", "{03BA014B-248E-4BE0-B084-579A3BE846C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F3677FC5-0AF8-47E9-B99C-00270604CB2E}"
+	ProjectSection(SolutionItems) = preProject
+		Database.sql = Database.sql
+		ExampleInput.json = ExampleInput.json
+		ExampleTransformation.json = ExampleTransformation.json
+		ExampleWorkflow.json = ExampleWorkflow.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43964A3C-1396-4579-8770-7EB545352CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43964A3C-1396-4579-8770-7EB545352CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43964A3C-1396-4579-8770-7EB545352CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43964A3C-1396-4579-8770-7EB545352CB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A3C12BF-8A98-40BA-805D-BA3EFCCD17F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A3C12BF-8A98-40BA-805D-BA3EFCCD17F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A3C12BF-8A98-40BA-805D-BA3EFCCD17F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A3C12BF-8A98-40BA-805D-BA3EFCCD17F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16CD5AC3-804D-4024-952E-F54F6C43CB0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16CD5AC3-804D-4024-952E-F54F6C43CB0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16CD5AC3-804D-4024-952E-F54F6C43CB0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16CD5AC3-804D-4024-952E-F54F6C43CB0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03BA014B-248E-4BE0-B084-579A3BE846C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03BA014B-248E-4BE0-B084-579A3BE846C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03BA014B-248E-4BE0-B084-579A3BE846C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03BA014B-248E-4BE0-B084-579A3BE846C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24E58F02-3ED6-4057-A898-0DD15DB99DF9}
+	EndGlobalSection
+EndGlobal
