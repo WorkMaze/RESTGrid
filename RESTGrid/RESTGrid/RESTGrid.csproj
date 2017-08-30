@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JUST.NETCore" Version="1.2.6" />
+    <PackageReference Include="JUST.NETCore" Version="1.2.7" />
   </ItemGroup>
 
 </Project>
