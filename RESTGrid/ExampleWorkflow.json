@@ -15,8 +15,7 @@
  
   "Tasks": [
     {
-      "Identifier": "CreateRole",
-     
+      "Identifier": "CreateRole",     
       "Next": [
         "AddApplication"
       ],
@@ -28,14 +27,11 @@
       //},    
       "TaskProperties": {
         "ArrayPath": "$.Organization.Employee"
-      },
-     
+      },     
     },
     {
-      "Identifier": "AddApplication",
-      
-      "Type": "Async",
-     
+      "Identifier": "AddApplication",      
+      "Type": "Sync",     
       "RunCondition": null,
       "TaskProperties": {
         "Url": "http://localhost:5001/",
@@ -43,7 +39,6 @@
         "Headers": null,
         "Body": "#valueof($.MessageBodyJson.Organization.Employee.Details)",
         "QueryString": "api/table/user"
-
       },
       "TaskRetries": 0
     },
