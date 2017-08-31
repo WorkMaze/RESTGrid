@@ -16,8 +16,7 @@
   "Tasks": [
     {
       "Identifier": "CreateRole",
-      "IncommingTaskID": 0,
-      "IncommingTaskProperties": null,
+     
       "Next": [
         "AddApplication"
       ],
@@ -34,8 +33,7 @@
     },
     {
       "Identifier": "AddApplication",
-      "IncommingTaskID": 0,
-      "IncommingTaskProperties": null,
+      
       "Type": "Async",
      
       "RunCondition": null,
