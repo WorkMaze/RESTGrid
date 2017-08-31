@@ -34,7 +34,53 @@ The following docker containers are available:-
  #### REST API - https://hub.docker.com/r/workmaze/restgrid.mysqlengine.api/
 
 ## Business Logic
-Business Logic is a JSON which defines the workflow. Below is an example of the business logic:-
+Business Logic is a JSON which defines the workflow. 
+
+The JSON contains the following two nodes:-
++ Start (The starting task for the workflow)
++ Tasks (An array of all the subsequent tasks in the workflow)
+
+### Task
+The Task JSON conatins the following:-
++ Identifier (A unique identifier which identifies the task)
++ Type (The type of task)
++ Next (An array of task identifiers pointing to the tasks that could be run after this task)
++ TaskRetries (The number of times a task can be retried before it fails)
++ TaskProperties (The JSON object that conatins information on how the task should be run - Can be transformed using **JUST**)
++ RunCondition (The condition which must be satisfied for the task to run)
+
+### Run Condition
++ Evaluator (An expression that needs to be evaulated - Can be transformed using **JUST**)
++ Evaluated (An expression to be evaluated against - Can be transformed using **JUST**)
++ Operator 
+ ++ stringequals
+ ++ stringcontains
+ ++ mathequals
+ ++ mathgreaterthan
+ ++ mathlessthan
+ ++ mathgreaterthanorequalto
+ ++ mathlessthanorequalto
+ 
+ ### Task Types
+ + Sync (Synchronous REST calls - next step is executed after a synchronous call)
+ + Async (Asynchronous REST calls - workflow waits for an external input after executing an asynchronous call) 
+ + Transformer (Transforms the message body - A **JUST** transformation)
+ + Splitter (Splits the message body based on an array inside the JSON - A **JUST** split)
+ 
+ ### Task Properties for REST (Sync & Async)
+ + Url (Url of the REST Service)
+ + Method (GET, POST, PUT or DELETE)
+ + Headers (Key-Value pair JSON)
+ + Body 
+ + QueryString
+ 
+ ### Task Properties for Transformer
+ + TransformerID (The integer ID identifying the transformer JSON - In case of MySql this is the primary key of the *transformer* table)
+ 
+ ### Task Properties for Splitter
+ + ArrayPath (The JSONPath pointing to the array)
+
+Below is an example of the business logic:-
 
 ```{
  "Start": {
