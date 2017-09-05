@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTGrid", "RESTGrid\RESTGrid.csproj", "{43964A3C-1396-4579-8770-7EB545352CB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTGrid", "RESTGrid\RESTGrid.csproj", "{43964A3C-1396-4579-8770-7EB545352CB2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTGrid.MySqlEngine.API", "RESTGrid.MySqlEngine.API\RESTGrid.MySqlEngine.API.csproj", "{0A3C12BF-8A98-40BA-805D-BA3EFCCD17F6}"
 EndProject
@@ -18,6 +18,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ExampleTransformation.json = ExampleTransformation.json
 		ExampleWorkflow.json = ExampleWorkflow.json
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTGrid.Providers.DynamoDB", "RESTGrid.Providers.DynamoDB\RESTGrid.Providers.DynamoDB.csproj", "{5EC6B302-0804-4AAE-A1A1-9CAE09AB280C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTGrid.DynamoDBEngine.API", "RESTGrid.DynamoDBEngine.API\RESTGrid.DynamoDBEngine.API.csproj", "{9F28E7D2-4095-43CB-86C0-FAC193B97581}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTGrid.DynamoDBEngine.Workflow", "RESTGrid.DynamoDBEngine.Workflow\RESTGrid.DynamoDBEngine.Workflow.csproj", "{57417770-5825-4B1E-9C1B-716CB01E5BD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +47,18 @@ Global
 		{03BA014B-248E-4BE0-B084-579A3BE846C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03BA014B-248E-4BE0-B084-579A3BE846C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03BA014B-248E-4BE0-B084-579A3BE846C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EC6B302-0804-4AAE-A1A1-9CAE09AB280C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EC6B302-0804-4AAE-A1A1-9CAE09AB280C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EC6B302-0804-4AAE-A1A1-9CAE09AB280C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EC6B302-0804-4AAE-A1A1-9CAE09AB280C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F28E7D2-4095-43CB-86C0-FAC193B97581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F28E7D2-4095-43CB-86C0-FAC193B97581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F28E7D2-4095-43CB-86C0-FAC193B97581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F28E7D2-4095-43CB-86C0-FAC193B97581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57417770-5825-4B1E-9C1B-716CB01E5BD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57417770-5825-4B1E-9C1B-716CB01E5BD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57417770-5825-4B1E-9C1B-716CB01E5BD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57417770-5825-4B1E-9C1B-716CB01E5BD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
