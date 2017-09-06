@@ -15,5 +15,7 @@ namespace RESTGrid.Models
 
         public DateTime Timestamp { get; set; }
 
+        public string SplitID { get; set; }
+
     }
 }

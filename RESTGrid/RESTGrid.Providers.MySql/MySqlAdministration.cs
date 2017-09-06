@@ -108,7 +108,7 @@ namespace RESTGrid.Providers.MySql
                         instance = new WorkflowHistory();
 
                         instance.WorkflowID = Guid.Parse(workflowID);
-                        instance.SplitID = reader.GetString("SplitID");
+                        
 
                         instance.Type = new WorkfowType()
                         {
@@ -125,8 +125,9 @@ namespace RESTGrid.Providers.MySql
                         Body = !reader.IsDBNull(0) ? JObject.Parse(reader.GetString(0)):null,
                         CustomPropertiesJson = !reader.IsDBNull(1) ? JObject.Parse(reader.GetString(1)) : null,
                         EventJson = !reader.IsDBNull(2) ? JObject.Parse(reader.GetString(2)) : null,
-                        Timestamp = reader.GetDateTime("Timestamp")
-                    };
+                        Timestamp = reader.GetDateTime("Timestamp"),
+                        SplitID = reader.GetString("SplitID")
+                };
 
                     instance.HisoryObjects.Add(history);
 

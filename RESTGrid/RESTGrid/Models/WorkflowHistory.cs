@@ -8,8 +8,6 @@ namespace RESTGrid.Models
     {
         public Guid WorkflowID { get; set; }
 
-        public string SplitID { get; set; }
-
         public WorkfowType Type { get; set; }
 
         public List<History> HisoryObjects { get; set; }
