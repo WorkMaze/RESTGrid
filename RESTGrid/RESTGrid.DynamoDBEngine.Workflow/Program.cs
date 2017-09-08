@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RESTGrid.Providers.DynamoDB;
 using System;
+using System.Threading;
 
 namespace RESTGrid.DynamoDBEngine.Workflow
 {
@@ -22,6 +23,7 @@ namespace RESTGrid.DynamoDBEngine.Workflow
                 while (true)
                 {
                     engine.Run();
+                    
                 }
             }
             catch (Exception ex)

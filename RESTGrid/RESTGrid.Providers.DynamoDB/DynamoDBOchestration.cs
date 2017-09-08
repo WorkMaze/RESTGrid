@@ -11,6 +11,9 @@ using Amazon.DynamoDBv2.DocumentModel;
 using System.Linq;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Amazon.DynamoDBv2.Model;
+using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace RESTGrid.Providers.DynamoDB
 {
@@ -54,7 +57,7 @@ namespace RESTGrid.Providers.DynamoDB
             Table table = Table.LoadTable(_client, tableName);
 
             ScanFilter scanFilter = new ScanFilter();
-            scanFilter.AddCondition(Constants.QueueActive, ScanOperator.Equal, "true");
+            scanFilter.AddCondition(Constants.QueueActive, ScanOperator.Equal, "True");
             
             Search search = table.Scan(scanFilter);
 
@@ -86,17 +89,33 @@ namespace RESTGrid.Providers.DynamoDB
                 foreach (Document document in documentList)
                 {
                     queueID = document[Constants.QueueId].AsString();
-                    businessLogicJson = JObject.Parse(document[Constants.BusinessLogic].AsString());
+                    businessLogicJson = JObject.Parse(document[Constants.BusinessLogic].AsDocument().ToJson());
                     workflowTypeName = document[Constants.WorkflowType].AsString();
                     workflowID = document[Constants.HistoryWorkflowId].AsGuid();
-                    customPropertiesJson = JObject.Parse(document[Constants.QueueCustomProperties].AsString());
-                    messageBodyJson = JObject.Parse(document[Constants.QueueMessageBody].AsString());
-                    stepIdentifier = document[Constants.QueueStepIdentifier].AsString();
-                    runStepIdentifier = document[Constants.QueueRunStepIdentifier].AsString();
-                    splitID = document[Constants.QueueSlitID].AsString();
-                    retries = document[Constants.QueueRetries].AsInt();
-                    stepSucceeded = document[Constants.QueueStepSucceeded].AsBoolean();
-                    timeStamp = document[Constants.Timestamp].AsDateTime();
+
+                    if(document.ContainsKey(Constants.QueueCustomProperties))
+                        customPropertiesJson = JObject.Parse(document[Constants.QueueCustomProperties].AsDocument().ToJson());
+
+                    if (document.ContainsKey(Constants.QueueMessageBody))
+                        messageBodyJson = JObject.Parse(document[Constants.QueueMessageBody].AsDocument().ToJson());
+
+                    if (document.ContainsKey(Constants.QueueStepIdentifier))
+                        stepIdentifier = document[Constants.QueueStepIdentifier].AsString();
+
+                    if (document.ContainsKey(Constants.QueueRunStepIdentifier))
+                        runStepIdentifier = document[Constants.QueueRunStepIdentifier].AsString();
+
+                    if (document.ContainsKey(Constants.QueueSlitID))
+                        splitID = document[Constants.QueueSlitID].AsString();
+
+                    if (document.ContainsKey(Constants.QueueRetries))
+                        retries = document[Constants.QueueRetries].AsInt();
+
+                    if (document.ContainsKey(Constants.QueueStepSucceeded))
+                        stepSucceeded = document[Constants.QueueStepSucceeded].AsBoolean();
+
+                    if (document.ContainsKey(Constants.Timestamp))
+                        timeStamp = Convert.ToDateTime( document[Constants.Timestamp].AsString());
 
                     QueueMetadata metadata = new QueueMetadata()
                     {
@@ -105,6 +124,9 @@ namespace RESTGrid.Providers.DynamoDB
                         MessageBodyJson = messageBodyJson,
                         SplitID = splitID,
                         StepIdentifier = stepIdentifier,
+                        Success = stepSucceeded,
+                        Retries = retries,
+                        Timestamp = timeStamp
                         
                     };
 
@@ -125,20 +147,25 @@ namespace RESTGrid.Providers.DynamoDB
                     queue.Metadata.Add(metadata);
 
                     list.Add(queue);
+                    DeleteFromQueue(queueID,true);
                 }
             } while (!search.IsDone);
 
             return list;
         }
 
+       
+
         public JObject GetTransformer(int transformerID)
         {
             JObject instance = null;
+
             Table table = Table.LoadTable(_client, Constants.ConfigurationTableName);
 
-            var item = table.GetItemAsync(transformerID, Constants.TransformerType);
+            var item = table.GetItemAsync(transformerID.ToString(), Constants.TransformerType);
             item.Wait();
 
+                      
             if (item.Result != null)
             {                
 
@@ -147,7 +174,7 @@ namespace RESTGrid.Providers.DynamoDB
                 foreach (KeyValuePair<string, DynamoDBEntry> row in rows)
                 {
                     if (row.Key == Constants.ConfigurationValue)
-                        instance = JObject.Parse( row.Value.AsString());
+                        instance = JObject.Parse( row.Value.AsDocument().ToJson());
                     
                    
                 }
@@ -175,7 +202,7 @@ namespace RESTGrid.Providers.DynamoDB
                 foreach (KeyValuePair<string, DynamoDBEntry> row in rows)
                 {
                     if (row.Key == Constants.ConfigurationValue)
-                        businessLogicJson = JObject.Parse(row.Value.AsString());
+                        businessLogicJson = JObject.Parse(row.Value.AsDocument().ToJson());
                 }
             }
 
@@ -190,11 +217,8 @@ namespace RESTGrid.Providers.DynamoDB
             string tableName = Constants.QueueTableName;
             Table table = Table.LoadTable(_client, tableName);
 
-            ScanFilter scanFilter = new ScanFilter();
-            scanFilter.AddCondition(Constants.QueueCustomProperties, ScanOperator.Contains, customPropertyName);
-            scanFilter.AddCondition(Constants.QueueCustomProperties, ScanOperator.Contains, customPropertyValue);
-
-            Search search = table.Scan(scanFilter);
+           
+            Search search = table.Scan(new Expression());
 
             string queueID = null;
             JObject businessLogicJson = null;
@@ -219,19 +243,34 @@ namespace RESTGrid.Providers.DynamoDB
 
                 foreach (Document document in documentList)
                 {
-                    queueID = document[Constants.QueueId].AsString();
-                    businessLogicJson = JObject.Parse(document[Constants.BusinessLogic].AsString());
-                    workflowTypeName = document[Constants.WorkflowType].AsString();
-                    workflowID = document[Constants.HistoryWorkflowId].AsGuid();
-                    customPropertiesJson = JObject.Parse(document[Constants.QueueCustomProperties].AsString());
-                    stepIdentifier = document[Constants.QueueStepIdentifier].AsString();
-                    runStepIdentifier = document[Constants.QueueRunStepIdentifier].AsString();
-                    splitID = document[Constants.QueueSlitID].AsString();
+                    string customPropertieString = document[Constants.QueueCustomProperties].AsDocument().ToJson();
+
+                    if (customPropertieString.Contains(customPropertyName) && customPropertieString.Contains(customPropertyValue))
+                    {
+
+                        queueID = document[Constants.QueueId].AsString();
+                        businessLogicJson = JObject.Parse(document[Constants.BusinessLogic].AsDocument().ToJson());
+                        workflowTypeName = document[Constants.WorkflowType].AsString();
+                        workflowID = document[Constants.HistoryWorkflowId].AsGuid();
+                        customPropertiesJson = JObject.Parse(customPropertieString);
+
+                        if(messageBodyJson == null)
+                        {
+                            messageBodyJson = JObject.Parse(document[Constants.QueueMessageBody].AsDocument().ToJson());
+                        }
+
+                        if(document.ContainsKey(Constants.QueueStepIdentifier))
+                            stepIdentifier = document[Constants.QueueStepIdentifier].AsString();
+
+                        if (document.ContainsKey(Constants.QueueRunStepIdentifier))
+                            runStepIdentifier = document[Constants.QueueRunStepIdentifier].AsString();
+                        splitID = document[Constants.QueueSlitID].AsString();
 
 
-                    PublishToQueue(queueID, businessLogicJson, workflowTypeName, workflowID, messageBodyJson, customPropertiesJson, stepIdentifier, stepSucceeded, workflowCompleted, retries, active, runStepIdentifier, splitID);
-                    PublishEvent(queueID, businessLogicJson, workflowTypeName, workflowID, messageBodyJson, customPropertiesJson, stepIdentifier, stepSucceeded, workflowCompleted, retries, active, runStepIdentifier, splitID);
-
+                        PublishToQueue(queueID, businessLogicJson, workflowTypeName, workflowID, messageBodyJson, customPropertiesJson, stepIdentifier, stepSucceeded, workflowCompleted, retries, active, runStepIdentifier, splitID);
+                        DeleteFromQueue(queueID,false);
+                        PublishEvent(queueID, businessLogicJson, workflowTypeName, workflowID, messageBodyJson, customPropertiesJson, stepIdentifier, stepSucceeded, workflowCompleted, retries, active, runStepIdentifier, splitID);
+                    }
                 }
             } while (!search.IsDone);
 
@@ -240,24 +279,32 @@ namespace RESTGrid.Providers.DynamoDB
 
         }
 
+        private async void DeleteFromQueue(string queueID,bool active)
+        {
+            string tableName = Constants.QueueTableName;
+            Table table = Table.LoadTable(_client, tableName);
+
+            await table.DeleteItemAsync(queueID, active.ToString());
+        }
+
         private async void PublishToQueue(string queueID,JObject businessLogicJson,string workflowTypeName, Guid workflowID, JObject messageBodyJson, JObject customPropertiesJson, string stepIdentifier, bool stepSucceeded, bool workflowCompleted, int retries, bool active, string runStepIdentifier, string splitID)
         {
             string tableName = Constants.QueueTableName;
             Table table = Table.LoadTable(_client, tableName);
-            string jsonText = "{\"" + Constants.QueueId + "\"" + queueID + "\",\""
+            string jsonText = "{\"" + Constants.QueueId + "\":\"" + queueID + "\",\""
                 + Constants.QueueActive + "\":\"" + active.ToString() + "\",\""
-                + Constants.HistoryWorkflowId + "\":" + workflowID.ToString() + "\",\""
-                + Constants.WorkflowType + "\":" + workflowTypeName + "\",\""
-                + Constants.BusinessLogic + "\":" + JsonConvert.SerializeObject(businessLogicJson) + "\",\""
-                + Constants.QueueMessageBody + "\":" + JsonConvert.SerializeObject(messageBodyJson) + "\",\""
-                + Constants.QueueCustomProperties + "\":" + JsonConvert.SerializeObject(customPropertiesJson) + "\",\""
-                + Constants.QueueRetries + "\":" + retries.ToString() + "\",\""
-                + Constants.QueueStepIdentifier + "\":" + stepIdentifier.ToString() + "\",\""
-                + Constants.QueueRunStepIdentifier + "\":" + runStepIdentifier.ToString() + "\",\""
-                + Constants.QueueSlitID + "\":" + splitID.ToString() + "\",\""
-                + Constants.Timestamp + "\":" + DateTime.UtcNow.ToString() + "\",\""
-                + Constants.QueueStepSucceeded + "\":" + stepSucceeded.ToString() + "\",\""
-                + Constants.QueueWorkflowCompleted + "\":" + workflowCompleted.ToString() + "\"}";
+                + Constants.HistoryWorkflowId + "\":\"" + workflowID.ToString() + "\",\""
+                + Constants.WorkflowType + "\":\"" + workflowTypeName + "\",\""
+                + Constants.BusinessLogic + "\":" + JsonConvert.SerializeObject(businessLogicJson) + ",\""
+                + Constants.QueueMessageBody + "\":" + JsonConvert.SerializeObject(messageBodyJson) + ",\""
+                + Constants.QueueCustomProperties + "\":" + JsonConvert.SerializeObject(customPropertiesJson) + ",\""
+                + Constants.QueueRetries + "\":" + retries.ToString() + ",\""
+                + ((stepIdentifier == null) ? string.Empty: Constants.QueueStepIdentifier + "\":\"" +  stepIdentifier.ToString() + "\",\"")
+                + ((runStepIdentifier == null)? string.Empty : Constants.QueueRunStepIdentifier + "\":\"" + runStepIdentifier.ToString() + "\",\"")
+                + Constants.QueueSlitID + "\":\"" + splitID.ToString() + "\",\""
+                + Constants.Timestamp + "\":\"" + DateTime.UtcNow.ToString() + "\",\""
+                + Constants.QueueStepSucceeded + "\":\"" + stepSucceeded.ToString() + "\",\""
+                + Constants.QueueWorkflowCompleted + "\":\"" + workflowCompleted.ToString() + "\"}";
             Document item = Document.FromJson(jsonText);
             await table.PutItemAsync(item);
         }
@@ -280,20 +327,19 @@ namespace RESTGrid.Providers.DynamoDB
 
             string runStepString = string.IsNullOrEmpty(runStepIdentifier) ? string.Empty : "\"RunStep\":\"" + runStepIdentifier + "\"";
 
-            string eventString = "{\"WorkflowState\":\"" + workflowState + "\"," + runStepIdentifier + "}";
+            string eventString = "{\"WorkflowState\":\"" + workflowState + "\"," + runStepString + "}";
 
             history.EventJson = JObject.Parse(eventString);
 
-            string UniqueId = string.IsNullOrEmpty(stepIdentifier) ? "Start" : stepIdentifier;
+            string UniqueId = string.IsNullOrEmpty(stepIdentifier) ? "Start_" : stepIdentifier + "_";
 
-            string jsonText = "{\"" + Constants.HistoryWorkflowId + "\":" + workflowID.ToString() + "\",\""
-                + Constants.WorkflowType + "\":" + workflowTypeName + "\",\""
-                + UniqueId + Guid.NewGuid().ToString() + "\":" + JsonConvert.SerializeObject(history)+"}";
+            string jsonText = "{\"" + Constants.HistoryWorkflowId + "\":\"" + workflowID.ToString() + "\",\""
+                + Constants.WorkflowType + "\":\"" + workflowTypeName + "\",\""
+                + UniqueId + Guid.NewGuid().ToString() + "\":" + JsonConvert.SerializeObject(history) + "}";
 
-
-
+            
             Document item = Document.FromJson(jsonText);
-            await table.PutItemAsync(item);
+            await table.UpdateItemAsync(item);
         }
     }
 }

@@ -61,15 +61,15 @@ namespace RESTGrid.Providers.DynamoDB
                     if (row.Key == Constants.WorkflowType)
                         instance.Type.Name = row.Value.AsString();
                     else if (row.Key == Constants.HistoryWorkflowId)
-                        instance.WorkflowID = row.Value.AsGuid();
+                        instance.WorkflowID = Guid.Parse( row.Value.AsString());
                     else if (row.Key == Constants.BusinessLogic)
-                        instance.Type.BusinessLogicJson =  JObject.Parse(row.Value.AsString());
+                        instance.Type.BusinessLogicJson =  JObject.Parse(row.Value.AsDocument().ToJson());
                     else
                     {
                         if (instance.HisoryObjects == null)
                             instance.HisoryObjects = new List<History>();
 
-                        JObject historyObject = JObject.Parse(row.Value.AsString());
+                        JObject historyObject = JObject.Parse(row.Value.AsDocument().ToJson());
 
                         History history = historyObject.ToObject<History>();
 
@@ -86,7 +86,7 @@ namespace RESTGrid.Providers.DynamoDB
         {
             string tableName = Constants.ConfigurationTableName;
             Table table = Table.LoadTable(_client, tableName);
-            string jsonText = "{\""+Constants.ConfigurationId+"\""+id+"\",\""+ Constants.ConfigurationType + "\":\""+type+"\",\""+ Constants.ConfigurationValue + "\":" + JsonConvert.SerializeObject(configuration) + "}";
+            string jsonText = "{\""+Constants.ConfigurationId+"\":\""+id+"\",\""+ Constants.ConfigurationType + "\":\""+type+"\",\""+ Constants.ConfigurationValue + "\":" + JsonConvert.SerializeObject(configuration) + "}";
             Document item = Document.FromJson(jsonText);
             await table.PutItemAsync(item);
         }
