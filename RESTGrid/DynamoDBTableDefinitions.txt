@@ -1,0 +1,12 @@
+# Table Name = RESTGrid_Configuration
+Partition Key = Id (String)
+Sort Key = Type (String)
+
+
+# Table Name = RESTGrid_History
+Partition Key = WorkflowID (String)
+
+
+# Table Name = RESTGrid_Queue
+Partition Key = QueueID (String)
+Sort Key = Active (String)

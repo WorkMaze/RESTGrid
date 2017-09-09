@@ -14,16 +14,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F3677FC5-0AF8-47E9-B99C-00270604CB2E}"
 	ProjectSection(SolutionItems) = preProject
 		Database.sql = Database.sql
+		DynamoDBTableDefinitions.txt = DynamoDBTableDefinitions.txt
 		ExampleInput.json = ExampleInput.json
 		ExampleTransformation.json = ExampleTransformation.json
 		ExampleWorkflow.json = ExampleWorkflow.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTGrid.Providers.DynamoDB", "RESTGrid.Providers.DynamoDB\RESTGrid.Providers.DynamoDB.csproj", "{5EC6B302-0804-4AAE-A1A1-9CAE09AB280C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTGrid.Providers.DynamoDB", "RESTGrid.Providers.DynamoDB\RESTGrid.Providers.DynamoDB.csproj", "{5EC6B302-0804-4AAE-A1A1-9CAE09AB280C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTGrid.DynamoDBEngine.API", "RESTGrid.DynamoDBEngine.API\RESTGrid.DynamoDBEngine.API.csproj", "{9F28E7D2-4095-43CB-86C0-FAC193B97581}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTGrid.DynamoDBEngine.API", "RESTGrid.DynamoDBEngine.API\RESTGrid.DynamoDBEngine.API.csproj", "{9F28E7D2-4095-43CB-86C0-FAC193B97581}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTGrid.DynamoDBEngine.Workflow", "RESTGrid.DynamoDBEngine.Workflow\RESTGrid.DynamoDBEngine.Workflow.csproj", "{57417770-5825-4B1E-9C1B-716CB01E5BD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RESTGrid.DynamoDBEngine.Workflow", "RESTGrid.DynamoDBEngine.Workflow\RESTGrid.DynamoDBEngine.Workflow.csproj", "{57417770-5825-4B1E-9C1B-716CB01E5BD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
