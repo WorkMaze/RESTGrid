@@ -32,6 +32,14 @@ At the moment we have the MySql provider as part of the project.
 The following docker containers are available:-
  #### Orchestration engine - https://hub.docker.com/r/workmaze/restgrid.mysqlengine.workflow/
  #### REST API - https://hub.docker.com/r/workmaze/restgrid.mysqlengine.api/
+ 
+ ## AWS DynamodDB provider for RESTGrid
+
+I have added the AWS DynamoDB (the NoSQL service in AWS) provider as part of the project.
+
+The following docker containers are available:-
+ #### Orchestration engine - https://hub.docker.com/r/workmaze/restgrid.dynamodbengine.workflow/
+ #### REST API - https://hub.docker.com/r/workmaze/restgrid.dynamodbengine.api/
 
 ## Business Logic
 Business Logic is a JSON which defines the workflow. 
