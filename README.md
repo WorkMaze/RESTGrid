@@ -1,3 +1,5 @@
+[![Build Status](https://workmaze.visualstudio.com/_apis/public/build/definitions/82d9da6f-b38c-4d61-a668-2087094c2849/2/badge)](https://workmaze.visualstudio.com/RESTGrid/_build/index?definitionId=2)
+
 # RESTGrid
 
 A simple Workflow\ETL system in .NET Core which uses REST services to interact with the outside world.
